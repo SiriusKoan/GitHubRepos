@@ -8,26 +8,28 @@ function make_repo_avatar(owner) {
     return avatar;
 }
 
-function make_repo_link(repo) {
+function make_repo_link(repo, fullname) {
     var link = document.createElement("a");
     link.setAttribute("href", repo["html_url"]);
     link.setAttribute("target", "_blank")
-    link.innerText = repo["name"];
+    link.innerText = fullname ? repo["full_name"] : repo["name"]
     return link;
 }
 
-function render_repos(repos) {
+function render_repos(repos, only_mine, fullname, TOKEN, username) {
     for (let i = 0; i < repos.length; i++) {
         var repo = repos[i];
-        var container = document.createElement("p");
-        container.appendChild(make_repo_avatar(repo["owner"]));
-        container.appendChild(make_repo_link(repo));
-        if (repo["fork"]) {
-            var fork = document.createElement("img");
-            fork.setAttribute("src", "./imgs/fork-white.png");
-            container.appendChild(fork);
+        if ((only_mine && username == repo["owner"]["login"]) || !only_mine) {
+            var container = document.createElement("p");
+            container.appendChild(make_repo_avatar(repo["owner"]));
+            container.appendChild(make_repo_link(repo, fullname));
+            if (repo["fork"]) {
+                var fork = document.createElement("img");
+                fork.setAttribute("src", "./imgs/fork-white.png");
+                container.appendChild(fork);
+            }
+            document.body.appendChild(container);
         }
-        document.body.appendChild(container);
     }
 }
 

@@ -8,8 +8,17 @@
 </head>
 <body>
     <h1>GitHubHelper Setting</h1>
-    <input type="text" id="token_field">
-    <button id="token">Set Token</button>
+    <label for="token">Your Token: </label>
+    <input type="text" name="token" id="token">
+    <br>
+    <input type="radio" name="only_mine" id="only_mine">
+    <label for="only_mine">Only show my repos.</label>
+    <br>
+    <input type="radio" name="fullname" id="fullname">
+    <label for="fullname">Show fullname of repo(including owner).</label>
+    <br>
+    <button id="submit">Save Setting</button>
+
     <script src="options.js"></script>
 </body>
 </html>
