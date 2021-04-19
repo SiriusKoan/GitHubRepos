@@ -13,7 +13,7 @@ function make_repo_link(repo) {
     link.setAttribute("href", repo["html_url"]);
     link.setAttribute("target", "_blank")
     link.innerText = repo["name"];
-    return link
+    return link;
 }
 
 function render_repos(repos) {
@@ -22,6 +22,11 @@ function render_repos(repos) {
         var container = document.createElement("p");
         container.appendChild(make_repo_avatar(repo["owner"]));
         container.appendChild(make_repo_link(repo));
+        if (repo["fork"]) {
+            var fork = document.createElement("img");
+            fork.setAttribute("src", "./imgs/fork-white.png");
+            container.appendChild(fork);
+        }
         document.body.appendChild(container);
     }
 }

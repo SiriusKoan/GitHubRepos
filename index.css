@@ -1,3 +1,7 @@
+body {
+    background-color: rgb(255, 248, 241);
+}
+
 a {
     text-decoration: none;
     color: blue;
@@ -9,7 +13,7 @@ a:hover {
 
 img {
     width: 17px;
-    margin: 0px 5px 0px 5px;
+    margin: 0px 5px -5px 5px;
 }
 
 p {
