@@ -1,6 +1,6 @@
 {
     "name": "GitHubHelper",
-    "description": "",
+    "description": "Help you list all your GitHub repos.",
     "version": "0.1",
     "permissions": [
         "tabs",
@@ -8,6 +8,9 @@
     ],
     "browser_action": {
         "default_popup": "popup.html"
+    },
+    "icons": {
+        "16": "imgs/icon.png"
     },
     "manifest_version": 2
 }

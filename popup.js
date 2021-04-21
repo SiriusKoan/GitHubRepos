@@ -25,19 +25,7 @@ function init() {
                 var repos = JSON.parse(request.responseText);
                 if (request.status == 200) {
                     msg.innerText = "";
-                    var request_user = new XMLHttpRequest();
-                    request_user.open("GET", "https://api.github.com/user")
-                    request_user.onreadystatechange = function () {
-                        var user = JSON.parse(request_user.responseText);
-                        if (request_user.status == 200) {
-                            render_repos(repos, only_mine, fullname, TOKEN, user["name"]);
-                        }
-                        else {
-                            msg.innerText = "Error";
-                        }
-                    }
-                    request_user.setRequestHeader("Authorization", "token " + TOKEN);
-                    request_user.send();
+                    render_repos(repos, only_mine, fullname, TOKEN);
                 }
                 else {
                     msg.innerText = "Error";

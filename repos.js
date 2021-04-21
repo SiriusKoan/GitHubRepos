@@ -15,11 +15,40 @@ function make_repo_link(repo, fullname) {
     link.innerText = fullname ? repo["full_name"] : repo["name"]
     return link;
 }
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-function render_repos(repos, only_mine, fullname, TOKEN, username) {
-    for (let i = 0; i < repos.length; i++) {
-        var repo = repos[i];
-        if ((only_mine && username == repo["owner"]["login"]) || !only_mine) {
+function render_repos(repos, only_mine, fullname, TOKEN, username_) {
+    if (only_mine) {
+        var request = new XMLHttpRequest();
+        request.open("GET", "https://api.github.com/user");
+        request.onreadystatechange = function () {
+            var user = JSON.parse(request.responseText);
+            var username = (request.status == 200) ? user["name"] : null;
+
+            for (let i = 0; i < repos.length; i++) {
+                var repo = repos[i];
+                if (username == repo["owner"]["login"]) {
+                    var container = document.createElement("p");
+                    container.appendChild(make_repo_avatar(repo["owner"]));
+                    container.appendChild(make_repo_link(repo, fullname));
+                    if (repo["fork"]) {
+                        var fork = document.createElement("img");
+                        fork.setAttribute("src", "./imgs/fork-white.png");
+                        container.appendChild(fork);
+                    }
+                    document.body.appendChild(container);
+                }
+            }
+
+        }
+        request.setRequestHeader("Authorization", "token " + TOKEN);
+        request.send();
+    }
+    else {
+        for (let i = 0; i < repos.length; i++) {
+            var repo = repos[i];
             var container = document.createElement("p");
             container.appendChild(make_repo_avatar(repo["owner"]));
             container.appendChild(make_repo_link(repo, fullname));
