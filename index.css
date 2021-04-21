@@ -20,9 +20,19 @@ img {
     margin: 0px 5px -5px 5px;
 }
 
-p {
+.container {
+    position: relative;
     font-size: 15px;
+    margin: 15px 10px 15px 0px;
 }
-p.dark_mode a {
+.container.dark_mode a {
     color: #0075FF;
+}
+
+#setting {
+    border-radius: 5px;
+}
+
+#setting:hover {
+    opacity: 0.8;
 }

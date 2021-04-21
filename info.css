@@ -1,0 +1,11 @@
+.info-box {
+    visibility: hidden;
+    
+    position: absolute;
+    z-index: 1;
+    left: 40%;
+}
+
+.container:hover .info-box {
+    visibility: visible;
+}

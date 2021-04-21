@@ -14,6 +14,7 @@ function init() {
         }
 
         var btn = document.createElement("button");
+        btn.id = "setting";
         btn.innerText = "Setting";
         document.body.appendChild(btn);
         btn.addEventListener("click", function () { chrome.tabs.create({ "url": "options.html" }) });
@@ -30,6 +31,7 @@ function init() {
                 var repos = JSON.parse(request.responseText);
                 if (request.status == 200) {
                     msg.innerText = "";
+                    console.log(request.responseText)
                     render_repos(repos, only_mine, fullname, TOKEN, dark_mode);
                 }
                 else {
