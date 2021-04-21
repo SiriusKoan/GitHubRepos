@@ -3,10 +3,15 @@ import { render_repos } from "./repos.js";
 window.onload = init();
 
 function init() {
-    chrome.storage.sync.get(["TOKEN", "only_mine", "fullname"], function (setting) {
+    chrome.storage.sync.get(["TOKEN", "only_mine", "fullname", "dark_mode"], function (setting) {
         var TOKEN = (setting["TOKEN"] == "undefined") ? undefined : setting["TOKEN"];
-        var only_mine = (setting["only_mine"] == "undefined") ? undefined : setting["only_mine"];
-        var fullname = (setting["fullname"] == "undefined") ? undefined : setting["fullname"];
+        var only_mine = (setting["only_mine"] == "undefined") ? false : setting["only_mine"];
+        var fullname = (setting["fullname"] == "undefined") ? false : setting["fullname"];
+        var dark_mode = (setting["dark_mode"] == "undefined") ? undefined : setting["dark_mode"];
+        
+        if (dark_mode) {
+            document.body.classList.add("dark_mode");
+        }
 
         var btn = document.createElement("button");
         btn.innerText = "Setting";
@@ -25,7 +30,7 @@ function init() {
                 var repos = JSON.parse(request.responseText);
                 if (request.status == 200) {
                     msg.innerText = "";
-                    render_repos(repos, only_mine, fullname, TOKEN);
+                    render_repos(repos, only_mine, fullname, TOKEN, dark_mode);
                 }
                 else {
                     msg.innerText = "Error";

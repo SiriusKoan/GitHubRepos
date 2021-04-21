@@ -1,6 +1,10 @@
 body {
     background-color: rgb(255, 248, 241);
 }
+body.dark_mode {
+    background-color: #152028;
+    color: #FFFFFF;
+}
 
 a {
     text-decoration: none;
@@ -18,4 +22,7 @@ img {
 
 p {
     font-size: 15px;
+}
+p.dark_mode a {
+    color: #0075FF;
 }
