@@ -1,9 +1,24 @@
 .info-box {
     visibility: hidden;
+    opacity: 0.85;
+    background-color: white;
+    color: black;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: black;
+    border-width: 1px;
+    padding: 0px 5px 0px 5px;
     
     position: absolute;
     z-index: 1;
-    left: 40%;
+    left: 20%;
+}
+
+.info-box.dark_mode {
+    opacity: 0.7;
+    background-color: #152028;
+    color: white;
+    border-color: white;
 }
 
 .container:hover .info-box {

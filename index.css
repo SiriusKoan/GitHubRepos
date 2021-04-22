@@ -36,3 +36,8 @@ img {
 #setting:hover {
     opacity: 0.8;
 }
+
+.fork {
+    width: 12px;
+    margin-left: 10px;
+}
