@@ -78,36 +78,25 @@ function make_pr_icon(link, dark_mode) {
     return pr;
 }
 
-function render_repos(repos, only_mine, fullname, TOKEN, dark_mode) {
-    var request = new XMLHttpRequest();
-    request.open("GET", "https://api.github.com/user");
-    request.onreadystatechange = function () {
-        var user = JSON.parse(request.responseText);
-        var username = (request.status == 200) ? user["name"] : null;
-        for (let i = 0; i < repos.length; i++) {
-            var repo = repos[i];
-            if (only_mine && username == repo["owner"]["login"] || !only_mine) {
-                var container = document.createElement("div");
-                container.classList.add("container");
-                if (dark_mode) {
-                    container.classList.add("dark_mode");
-                }
-
-                container.appendChild(make_repo_avatar(repo["owner"]));
-                container.appendChild(make_repo_link(repo, fullname));
-                container.appendChild(make_info_box(repo, dark_mode));
-                if (repo["fork"]) {
-                    container.appendChild(make_fork_icon(dark_mode));
-                }
-                container.appendChild(make_issue_icon(repo["html_url"] + "/issues", dark_mode));
-                container.appendChild(make_pr_icon(repo["html_url"] + "/pulls", dark_mode));
-                document.body.appendChild(container);
-            }
+function render_repos(repos, fullname, dark_mode) {
+    for (let i = 0; i < repos.length; i++) {
+        var repo = repos[i];
+        var container = document.createElement("div");
+        container.classList.add("container");
+        if (dark_mode) {
+            container.classList.add("dark_mode");
         }
 
+        container.appendChild(make_repo_avatar(repo["owner"]));
+        container.appendChild(make_repo_link(repo, fullname));
+        container.appendChild(make_info_box(repo, dark_mode));
+        if (repo["fork"]) {
+            container.appendChild(make_fork_icon(dark_mode));
+        }
+        container.appendChild(make_issue_icon(repo["html_url"] + "/issues", dark_mode));
+        container.appendChild(make_pr_icon(repo["html_url"] + "/pulls", dark_mode));
+        document.body.appendChild(container);
     }
-    request.setRequestHeader("Authorization", "token " + TOKEN);
-    request.send();
 }
 
 export { render_repos };
