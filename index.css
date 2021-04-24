@@ -1,6 +1,7 @@
 body {
     background-color: rgb(255, 248, 241);
 }
+
 body.dark_mode {
     background-color: #152028;
     color: #FFFFFF;
@@ -25,12 +26,15 @@ img {
     font-size: 15px;
     margin: 15px 10px 15px 0px;
 }
+
 .container.dark_mode a {
     color: #0075FF;
 }
 
 #setting {
     border-radius: 5px;
+    height: 26px;
+    border: 0px;
 }
 
 #setting:hover {

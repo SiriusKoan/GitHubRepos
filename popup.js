@@ -13,10 +13,7 @@ function init() {
             document.body.classList.add("dark_mode");
         }
 
-        var btn = document.createElement("button");
-        btn.id = "setting";
-        btn.innerText = "Setting";
-        document.body.appendChild(btn);
+        var btn = document.getElementById("setting");
         btn.addEventListener("click", function () { chrome.tabs.create({ "url": "options.html" }) });
 
         var msg = document.createElement("p");
