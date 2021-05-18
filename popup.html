@@ -15,6 +15,31 @@
     <div>
         <button id="setting">Setting</button>
     </div>
+    <div>
+        <select name="language" id="language">
+            <option value="">Language</option>
+            <option value="JavaScript">JavaScript</option>
+            <option value="Python">Python</option>
+            <option value="Java">Java</option>
+            <option value="Go">Go</option>
+            <option value="Ruby">Ruby</option>
+            <option value="C++">C++</option>
+            <option value="TypeScript">TypeScript</option>
+            <option value="PHP">PHP</option>
+            <option value="C#">C#</option>
+            <option value="C">C</option>
+            <option value="Shell">Shell</option>
+        </select>
+        <div>
+            <input type="checkbox" name="only_mine" id="only_mine" value="only_mine">
+            <label for="onlymine">Only show my repos</label>
+        </div>
+        <div>
+            <input type="checkbox" name="fullname" id="fullname" value="fullname">
+            <label for="fullname">Show fullname</label>
+        </div>
+        <button type="submit" id="submit-filter">Submit</button>
+    </div>
     <script src="popup.js" type="module"></script>
 </body>
 

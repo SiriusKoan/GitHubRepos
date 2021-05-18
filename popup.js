@@ -1,29 +1,49 @@
 import { render_repos } from "./repos.js";
 
-function repo_filter(repos, only_mine, username) {
+function repo_filter(repos, only_mine, username, language) {
     if (only_mine) {
         repos = repos.filter(repo => repo["owner"]["login"] == username);
     }
-    console.log(repos);
+    if (language) {
+        repos = repos.filter(repo => repo["language"] == language)
+    }
     return repos;
+}
+
+function get_filter() {
+    var language_field = document.getElementById("language")
+    chrome.storage.sync.set(
+        {
+            "language": language_field.options[language_field.selectedIndex].value,
+            "only_mine": document.getElementById("only_mine").checked,
+            "fullname": document.getElementById("fullname").checked
+        }
+    );
+    window.location.reload();
 }
 
 window.onload = init();
 
 function init() {
-    chrome.storage.sync.get(["TOKEN", "only_mine", "fullname", "dark_mode"], function (setting) {
+    var btn = document.getElementById("setting");
+    btn.addEventListener("click", function () { chrome.tabs.create({ "url": "options.html" }) });
+    document.getElementById("submit-filter").addEventListener("click", function () { get_filter() })
+    chrome.storage.sync.get(["TOKEN", "only_mine", "language", "fullname", "dark_mode"], function (setting) {
+        // load setting
         var TOKEN = (setting["TOKEN"] == "undefined") ? undefined : setting["TOKEN"];
         var only_mine = (setting["only_mine"] == "undefined") ? false : setting["only_mine"];
+        var language = (setting["language"] == "undefined") ? "" : setting["language"];
         var fullname = (setting["fullname"] == "undefined") ? false : setting["fullname"];
         var dark_mode = (setting["dark_mode"] == "undefined") ? undefined : setting["dark_mode"];
+
+        // render setting
+        document.getElementById("language").options[0].text = language;
+        document.getElementById("only_mine").checked = only_mine;
+        document.getElementById("fullname").checked = fullname;
 
         if (dark_mode) {
             document.body.classList.add("dark_mode");
         }
-
-        var btn = document.getElementById("setting");
-        btn.addEventListener("click", function () { chrome.tabs.create({ "url": "options.html" }) });
-
         var msg = document.createElement("p");
         document.body.appendChild(msg);
 
@@ -45,7 +65,7 @@ function init() {
                 var repos = JSON.parse(request_repo.responseText);
                 if (request_repo.status == 200) {
                     msg.innerText = "";
-                    render_repos(repo_filter(repos, only_mine, username), fullname, dark_mode);
+                    render_repos(repo_filter(repos, only_mine, username, language), fullname, dark_mode);
                 }
                 else {
                     msg.innerText = "Error";
