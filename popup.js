@@ -31,11 +31,18 @@ function clear_filter() {
     window.location.reload();
 }
 
+function set_dark_mode(dark_mode) {
+    chrome.storage.sync.set({
+        "dark_mode": dark_mode
+    })
+    window.location.reload();
+}
+
 window.onload = init();
 
 function init() {
     // clear filter 30 seconds later
-    chrome.storage.sync.get(["save_time"], function(info){
+    chrome.storage.sync.get(["save_time"], function (info) {
         var save_time = info["save_time"];
         if (Date.now() - save_time > 30000) {
             clear_filter();
@@ -45,6 +52,15 @@ function init() {
     setting_btn.addEventListener("click", function () { chrome.tabs.create({ "url": "options.html" }) });
     var clear_btn = document.getElementById("clear_filter");
     clear_btn.addEventListener("click", function () { clear_filter() })
+    var dark_mode_btn = document.getElementById("dark_mode");
+    dark_mode_btn.addEventListener("click", (event) => {
+        if (event.currentTarget.checked) {
+            set_dark_mode(true);
+        }
+        else {
+            set_dark_mode(false);
+        }
+    })
     document.getElementById("submit-filter").addEventListener("click", function () { get_filter() })
     chrome.storage.sync.get(["TOKEN", "only_mine", "language", "fullname", "dark_mode"], function (setting) {
         // load setting
@@ -58,6 +74,7 @@ function init() {
         document.getElementById("language").options[0].text = language;
         document.getElementById("only_mine").checked = only_mine;
         document.getElementById("fullname").checked = fullname;
+        document.getElementById("dark_mode").checked = dark_mode;
 
         if (dark_mode) {
             document.body.classList.add("dark_mode");
