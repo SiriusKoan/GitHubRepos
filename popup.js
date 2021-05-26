@@ -14,6 +14,7 @@ function get_filter() {
     var language_field = document.getElementById("language")
     chrome.storage.sync.set(
         {
+            "save_time": Date.now(),
             "language": language_field.options[language_field.selectedIndex].value,
             "only_mine": document.getElementById("only_mine").checked,
             "fullname": document.getElementById("fullname").checked
@@ -22,19 +23,36 @@ function get_filter() {
     window.location.reload();
 }
 
+function clear_filter() {
+    chrome.storage.sync.remove("save_time");
+    chrome.storage.sync.remove("language");
+    chrome.storage.sync.remove("only_mine");
+    chrome.storage.sync.remove("fullname");
+    window.location.reload();
+}
+
 window.onload = init();
 
 function init() {
-    var btn = document.getElementById("setting");
-    btn.addEventListener("click", function () { chrome.tabs.create({ "url": "options.html" }) });
+    // clear filter 30 seconds later
+    chrome.storage.sync.get(["save_time"], function(info){
+        var save_time = info["save_time"];
+        if (Date.now() - save_time > 30000) {
+            clear_filter();
+        }
+    })
+    var setting_btn = document.getElementById("setting");
+    setting_btn.addEventListener("click", function () { chrome.tabs.create({ "url": "options.html" }) });
+    var clear_btn = document.getElementById("clear_filter");
+    clear_btn.addEventListener("click", function () { clear_filter() })
     document.getElementById("submit-filter").addEventListener("click", function () { get_filter() })
     chrome.storage.sync.get(["TOKEN", "only_mine", "language", "fullname", "dark_mode"], function (setting) {
         // load setting
-        var TOKEN = (setting["TOKEN"] == "undefined") ? undefined : setting["TOKEN"];
-        var only_mine = (setting["only_mine"] == "undefined") ? false : setting["only_mine"];
-        var language = (setting["language"] == "undefined") ? "" : setting["language"];
-        var fullname = (setting["fullname"] == "undefined") ? false : setting["fullname"];
-        var dark_mode = (setting["dark_mode"] == "undefined") ? undefined : setting["dark_mode"];
+        var TOKEN = setting["TOKEN"];
+        var only_mine = setting["only_mine"]
+        var language = (setting["language"] == undefined) ? "" : setting["language"];
+        var fullname = setting["fullname"]
+        var dark_mode = setting["dark_mode"]
 
         // render setting
         document.getElementById("language").options[0].text = language;
