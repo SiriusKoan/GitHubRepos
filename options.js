@@ -9,7 +9,7 @@ function init() {
 document.getElementById("submit").addEventListener("click", setting)
 
 function setting() {
-    var token = document.getElementById("token").value;
+    let token = document.getElementById("token").value;
     chrome.storage.sync.set(
         {
             "TOKEN": token,

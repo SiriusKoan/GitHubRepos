@@ -1,15 +1,15 @@
 function make_repo_avatar(owner) {
-    var avatar = document.createElement("a");
+    let avatar = document.createElement("a");
     avatar.setAttribute("href", owner["html_url"]);
     avatar.setAttribute("target", "_blank")
-    var avatar_img = document.createElement("img");
+    let avatar_img = document.createElement("img");
     avatar_img.setAttribute("src", owner["avatar_url"]);
     avatar.appendChild(avatar_img);
     return avatar;
 }
 
 function make_repo_link(repo) {
-    var link = document.createElement("a");
+    let link = document.createElement("a");
     link.href = repo["html_url"];
     link.setAttribute("target", "_blank");
     let fullname_field = document.getElementById("fullname");
@@ -18,25 +18,25 @@ function make_repo_link(repo) {
 }
 
 function make_info_box(repo, dark_mode) {
-    var info_box = document.createElement("div");
+    let info_box = document.createElement("div");
     info_box.classList.add("info-box");
     if (dark_mode) {
         info_box.classList.add("dark_mode");
     }
-    var fullname = document.createElement("p");
+    let fullname = document.createElement("p");
     fullname.innerText = "Name: " + repo["full_name"];
     info_box.appendChild(fullname);
-    var description = document.createElement("p");
+    let description = document.createElement("p");
     description.innerText = "Description: " + repo["description"];
     info_box.appendChild(description);
-    var language = document.createElement("p");
+    let language = document.createElement("p");
     language.innerText = "Language: " + repo["language"];
     info_box.appendChild(language);
     return info_box;
 }
 
 function make_fork_icon(dark_mode) {
-    var fork = document.createElement("img");
+    let fork = document.createElement("img");
     fork.classList.add("fork");
     if (dark_mode) {
         fork.setAttribute("src", "./imgs/fork/dark.png");
@@ -48,10 +48,10 @@ function make_fork_icon(dark_mode) {
 }
 
 function make_issue_icon(link, dark_mode) {
-    var issue = document.createElement("a");
+    let issue = document.createElement("a");
     issue.href = link;
     issue.setAttribute("target", "_blank");
-    var issue_icon = document.createElement("img");
+    let issue_icon = document.createElement("img");
     issue_icon.classList.add("issue");
     if (dark_mode) {
         issue_icon.setAttribute("src", "./imgs/issue/dark.png");
@@ -64,10 +64,10 @@ function make_issue_icon(link, dark_mode) {
 }
 
 function make_pr_icon(link, dark_mode) {
-    var pr = document.createElement("a");
+    let pr = document.createElement("a");
     pr.href = link;
     pr.setAttribute("target", "_blank");
-    var pr_icon = document.createElement("img");
+    let pr_icon = document.createElement("img");
     pr_icon.classList.add("pr");
     if (dark_mode) {
         pr_icon.setAttribute("src", "./imgs/pr/dark.png");

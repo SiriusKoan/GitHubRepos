@@ -6,12 +6,17 @@ var username = "";
 function repo_filter() {
     let only_mine = document.getElementById("only_mine").checked;
     let language = document.getElementById("language").options[document.getElementById("language").selectedIndex].value;
+    let search = document.getElementById("search").value;
     let filtered_repos = repos;
     if (only_mine) {
         filtered_repos = repos.filter(repo => repo["owner"]["login"] == username);
     }
     if (language) {
         filtered_repos = repos.filter(repo => repo["language"] == language)
+    }
+    console.log(filtered_repos[0])
+    if (search) {
+        filtered_repos = repos.filter(repo => repo["name"].includes(search) || (repo["description"] && repo["description"].includes(search)));
     }
     return filtered_repos;
 }
@@ -80,7 +85,6 @@ function init() {
             request_repo.open("GET", "https://api.github.com/user/repos?per_page=1000&visibility=all&sort=updated");
             request_repo.onreadystatechange = function () {
                 if (request_repo.readyState == XMLHttpRequest.DONE && request_repo.status == 200) {
-                    console.log(request_repo.responseText);
                     repos = JSON.parse(request_repo.responseText);
                     msg.innerText = "";
                     render_repos(repo_filter(), dark_mode);
