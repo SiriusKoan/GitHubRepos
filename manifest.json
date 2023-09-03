@@ -1,16 +1,15 @@
 {
+    "manifest_version": 3,
     "name": "GitHubRepos",
-    "description": "Help you list all your GitHub repos.",
+    "description": "Helps you list all your GitHub repos.",
     "version": "1.0",
     "permissions": [
-        "tabs",
         "storage"
     ],
-    "browser_action": {
-        "default_popup": "popup.html"
-    },
-    "icons": {
-        "16": "imgs/icon.png"
-    },
-    "manifest_version": 2
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "imgs/icon.png"
+        }
+    }
 }
