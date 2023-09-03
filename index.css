@@ -1,5 +1,6 @@
 body {
     background-color: rgb(255, 248, 241);
+    color: #000000;
 }
 
 body.dark_mode {
@@ -13,6 +14,7 @@ button {
     border-radius: 5px;
     height: 30px;
     border: 0px;
+    cursor: pointer;
 }
 
 button:hover {
@@ -21,6 +23,10 @@ button:hover {
 
 a {
     text-decoration: none;
+    color: rgb(0, 31, 77);
+}
+
+.dark_mode a {
     color: rgb(87, 154, 255);
 }
 
@@ -29,8 +35,10 @@ a:hover {
 }
 
 select {
-    margin: 10px 10px 10px 0;
+    margin: 2px 0;
+    padding-left: 5px;
     height: 25px;
+    width: 200px;
     border-radius: 5px;
     border: 0px;
     outline: none;
@@ -47,13 +55,24 @@ img {
     margin: 15px 10px 15px 0px;
 }
 
-.repo-container.dark_mode a {
+.dark_mode .repo-container a {
     color: #0075FF;
 }
 
-.fork {
-    width: 12px;
-    margin-left: 10px;
+.fork,.pr,.issue {
+    width: 18px;
+}
+
+.dark_mode .fork {
+    filter: invert(100%);
+}
+
+.dark_mode .pr {
+    filter: invert(100%);
+}
+
+.dark_mode .issue {
+    filter: invert(100%);
 }
 
 /* dark mode button */
@@ -113,9 +132,10 @@ input:checked+.slider:before {
 
 input[type="text"] {
     height: 25px;
+    width: 200px;
     border-radius: 5px;
     border: 0px;
     padding-left: 5px;
-    margin: 10px 10px 10px 0;
+    margin: 2px 0;
     outline: none;
 }

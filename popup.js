@@ -1,6 +1,6 @@
 import { RepoManager } from "./repos.js";
 
-var repo_renderer = new RepoManager([], "", true);
+var repo_renderer = new RepoManager([], "");
 
 function clear_filter() {
     document.getElementById("only_mine").checked = false;
@@ -12,7 +12,12 @@ function set_dark_mode(dark_mode) {
     chrome.storage.sync.set({
         "dark_mode": dark_mode
     })
-    window.location.reload();
+    if (dark_mode) {
+        document.body.classList.add("dark_mode");
+    }
+    else {
+        document.body.classList.remove("dark_mode");
+    }
 }
 
 window.onload = init();
@@ -24,6 +29,7 @@ function init() {
     clear_btn.addEventListener("click", function () { clear_filter() })
     let dark_mode_btn = document.getElementById("dark_mode");
     dark_mode_btn.addEventListener("click", (event) => {
+        console.log(event.target.checked);
         set_dark_mode(event.target.checked);
     })
     let filter_form = document.getElementById("filter-form");
@@ -37,10 +43,10 @@ function init() {
 
         // render setting
         document.getElementById("dark_mode").checked = dark_mode;
-
         if (dark_mode) {
             document.body.classList.add("dark_mode");
         }
+
         let msg = document.createElement("p");
         document.body.appendChild(msg);
 

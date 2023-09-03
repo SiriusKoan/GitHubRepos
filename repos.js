@@ -1,9 +1,8 @@
 class RepoManager {
-    constructor(repos, username, dark_mode) {
+    constructor(repos, username) {
         this.repos = repos;
         this.render_repos = repos;
         this.username = username;
-        this.dark_mode = dark_mode;
     }
 
     repoFilter() {
@@ -45,9 +44,6 @@ class RepoManager {
     makeInfoBox(repo) {
         const info_box = document.createElement("div");
         info_box.classList.add("info-box");
-        if (this.dark_mode) {
-            info_box.classList.add("dark_mode");
-        }
         const fullname = document.createElement("p");
         fullname.innerText = "Name: " + repo["full_name"];
         info_box.appendChild(fullname);
@@ -63,11 +59,7 @@ class RepoManager {
     makeForkIcon() {
         const fork = document.createElement("img");
         fork.classList.add("fork");
-        if (this.dark_mode) {
-            fork.setAttribute("src", "./imgs/fork/dark.png");
-        } else {
-            fork.setAttribute("src", "./imgs/fork/light.png");
-        }
+        fork.setAttribute("src", "./imgs/fork.png");
         return fork;
     }
 
@@ -77,11 +69,7 @@ class RepoManager {
         issue.setAttribute("target", "_blank");
         const issue_icon = document.createElement("img");
         issue_icon.classList.add("issue");
-        if (this.dark_mode) {
-            issue_icon.setAttribute("src", "./imgs/issue/dark.png");
-        } else {
-            issue_icon.setAttribute("src", "./imgs/issue/light.png");
-        }
+        issue_icon.setAttribute("src", "./imgs/issue.png");
         issue.appendChild(issue_icon);
         return issue;
     }
@@ -92,11 +80,7 @@ class RepoManager {
         pr.setAttribute("target", "_blank");
         const pr_icon = document.createElement("img");
         pr_icon.classList.add("pr");
-        if (this.dark_mode) {
-            pr_icon.setAttribute("src", "./imgs/pr/dark.png");
-        } else {
-            pr_icon.setAttribute("src", "./imgs/pr/light.png");
-        }
+        pr_icon.setAttribute("src", "./imgs/pr.png");
         pr.appendChild(pr_icon);
         return pr;
     }
