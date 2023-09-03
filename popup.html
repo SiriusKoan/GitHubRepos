@@ -18,32 +18,34 @@
     <label class="switch">
         <input type="checkbox" id="dark_mode">
         <span class="slider round"></span>
-      </label>
+    </label>
     <div>
-        <select name="language" id="language">
-            <option value="">Language</option>
-            <option value="JavaScript">JavaScript</option>
-            <option value="Python">Python</option>
-            <option value="Java">Java</option>
-            <option value="Go">Go</option>
-            <option value="Ruby">Ruby</option>
-            <option value="C++">C++</option>
-            <option value="TypeScript">TypeScript</option>
-            <option value="PHP">PHP</option>
-            <option value="C#">C#</option>
-            <option value="C">C</option>
-            <option value="Shell">Shell</option>
-            <option value="HTML">HTML</option>
-        </select>
-        <div>
-            <input type="checkbox" name="only_mine" id="only_mine" value="only_mine">
-            <label for="onlymine">Only show my repos</label>
-        </div>
-        <div>
-            <input type="checkbox" name="fullname" id="fullname" value="fullname">
-            <label for="fullname">Show fullname</label>
-        </div>
-        <button id="clear_filter">Clear Filter</button>
+        <form id="filter-form">
+            <select name="language" id="language">
+                <option value="">Language</option>
+                <option value="JavaScript">JavaScript</option>
+                <option value="Python">Python</option>
+                <option value="Java">Java</option>
+                <option value="Go">Go</option>
+                <option value="Ruby">Ruby</option>
+                <option value="C++">C++</option>
+                <option value="TypeScript">TypeScript</option>
+                <option value="PHP">PHP</option>
+                <option value="C#">C#</option>
+                <option value="C">C</option>
+                <option value="Shell">Shell</option>
+                <option value="HTML">HTML</option>
+            </select>
+            <div>
+                <input type="checkbox" name="only_mine" id="only_mine" value="only_mine">
+                <label for="only_mine">Only show my repos</label>
+            </div>
+            <div>
+                <input type="checkbox" name="fullname" id="fullname" value="fullname">
+                <label for="fullname">Show fullname</label>
+            </div>
+            <button id="clear_filter">Clear Filter</button>
+        </form>
     </div>
     <div id="container" class="container"></div>
     <script src="popup.js" type="module"></script>

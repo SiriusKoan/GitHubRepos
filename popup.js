@@ -1,26 +1,25 @@
 import { render_repos } from "./repos.js";
 
-var repos;
-var username;
+var repos = [];
+var username = "";
 
-function repo_filter(repos, only_mine, language) {
+function repo_filter() {
+    let only_mine = document.getElementById("only_mine").checked;
+    let language = document.getElementById("language").options[document.getElementById("language").selectedIndex].value;
+    let filtered_repos = repos;
     if (only_mine) {
-        repos = repos.filter(repo => repo["owner"]["login"] == username);
+        filtered_repos = repos.filter(repo => repo["owner"]["login"] == username);
     }
     if (language) {
-        repos = repos.filter(repo => repo["language"] == language)
+        filtered_repos = repos.filter(repo => repo["language"] == language)
     }
-    return repos;
-}
-
-function get_filter() {
-    let language_field = document.getElementById("language")
-    let only_mine_field = document.getElementById("only_mine")
-    let fullname_field = document.getElementById("fullname")
-    window.location.reload();
+    return filtered_repos;
 }
 
 function clear_filter() {
+    document.getElementById("only_mine").checked = false;
+    document.getElementById("language").selectedIndex = 0;
+    render_repos(repo_filter(), dark_mode);
 }
 
 function set_dark_mode(dark_mode) {
@@ -46,6 +45,10 @@ function init() {
             set_dark_mode(false);
         }
     })
+    let filter_form = document.getElementById("filter-form");
+    filter_form.addEventListener("submit", function (event) { event.preventDefault(); })
+    filter_form.addEventListener("change", function () { render_repos(repo_filter(), dark_mode); })
+
     chrome.storage.sync.get(["TOKEN", "dark_mode"], function (setting) {
         // load setting
         let TOKEN = setting["TOKEN"];
@@ -80,7 +83,7 @@ function init() {
                     console.log(request_repo.responseText);
                     repos = JSON.parse(request_repo.responseText);
                     msg.innerText = "";
-                    render_repos(repo_filter(repos, only_mine, language), fullname, dark_mode);
+                    render_repos(repo_filter(), dark_mode);
                 }
                 else {
                     msg.innerText = "Error";

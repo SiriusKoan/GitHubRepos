@@ -8,11 +8,12 @@ function make_repo_avatar(owner) {
     return avatar;
 }
 
-function make_repo_link(repo, fullname) {
+function make_repo_link(repo) {
     var link = document.createElement("a");
     link.href = repo["html_url"];
     link.setAttribute("target", "_blank");
-    link.innerText = fullname ? repo["full_name"] : repo["name"]
+    let fullname_field = document.getElementById("fullname");
+    link.innerText = fullname_field.checked ? repo["full_name"] : repo["name"]
     return link;
 }
 
@@ -78,7 +79,7 @@ function make_pr_icon(link, dark_mode) {
     return pr;
 }
 
-function render_repos(repos, fullname, dark_mode) {
+function render_repos(repos, dark_mode) {
     let container = document.getElementById("container");
     container.innerHTML = "";
     for (let i = 0; i < repos.length; i++) {
@@ -87,7 +88,7 @@ function render_repos(repos, fullname, dark_mode) {
         let repo_container = document.createElement("div");
         repo_container.classList.add("repo-container");
         repo_container.appendChild(make_repo_avatar(repo["owner"]));
-        repo_container.appendChild(make_repo_link(repo, fullname));
+        repo_container.appendChild(make_repo_link(repo));
         repo_container.appendChild(make_info_box(repo, dark_mode));
         if (repo["fork"]) {
             repo_container.appendChild(make_fork_icon(dark_mode));
