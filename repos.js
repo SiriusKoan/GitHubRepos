@@ -5,6 +5,15 @@ class RepoManager {
         this.username = username;
     }
 
+    static checkStringInclude(str, search) {
+        for (let i = 0; i < search.length; i++) {
+            if (!str.includes(search[i])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     repoFilter() {
         let only_mine = document.getElementById("only_mine").checked;
         let search = document.getElementById("search").value.toLowerCase();
@@ -13,19 +22,18 @@ class RepoManager {
             filtered_repos = filtered_repos.filter(repo => repo["owner"]["login"] == this.username);
         }
         if (search) {
-            let search_arr = search.split(" ");
+            let search_arr = search.trim().split(" ");
             let new_filtered_repos = [];
-            for (let i = 0; i < search_arr.length; i++) {
-                for (let j = 0; j < filtered_repos.length; j++) {
-                    let repo = filtered_repos[j];
-                    let name = repo["name"].toLowerCase();
-                    let description = repo["description"] ? repo["description"].toLowerCase() : "";
-                    let owner = repo["owner"]["login"].toLowerCase();
-                    let language = repo["language"] ? repo["language"].toLowerCase() : "";
-                    let topics = repo["topics"] ? repo["topics"].join(" ").toLowerCase() : "";
-                    if (name.includes(search_arr[i]) || description.includes(search_arr[i]) || owner.includes(search_arr[i]) || language.includes(search_arr[i]) || topics.includes(search_arr[i])) {
-                        new_filtered_repos.push(repo);
-                    }
+            for (let i = 0; i < filtered_repos.length; i++) {
+                let repo = filtered_repos[i];
+                let name = repo["name"].toLowerCase();
+                let description = repo["description"] ? repo["description"].toLowerCase() : "";
+                let owner = repo["owner"]["login"].toLowerCase();
+                let language = repo["language"] ? repo["language"].toLowerCase() : "";
+                let topics = repo["topics"] ? repo["topics"].join(" ").toLowerCase() : "";
+                let text = name + " " + description + " " + owner + " " + language + " " + topics;
+                if (RepoManager.checkStringInclude(text, search_arr)) {
+                    new_filtered_repos.push(repo);
                 }
             }
             filtered_repos = new_filtered_repos;
