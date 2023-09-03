@@ -37,13 +37,13 @@ img {
     margin: 0px 5px -5px 5px;
 }
 
-.container {
+.repo-container {
     position: relative;
     font-size: 15px;
     margin: 15px 10px 15px 0px;
 }
 
-.container.dark_mode a {
+.repo-container.dark_mode a {
     color: #0075FF;
 }
 

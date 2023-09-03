@@ -79,23 +79,22 @@ function make_pr_icon(link, dark_mode) {
 }
 
 function render_repos(repos, fullname, dark_mode) {
+    let container = document.getElementById("container");
+    container.innerHTML = "";
     for (let i = 0; i < repos.length; i++) {
-        var repo = repos[i];
-        var container = document.createElement("div");
-        container.classList.add("container");
-        if (dark_mode) {
-            container.classList.add("dark_mode");
-        }
+        let repo = repos[i];
 
-        container.appendChild(make_repo_avatar(repo["owner"]));
-        container.appendChild(make_repo_link(repo, fullname));
-        container.appendChild(make_info_box(repo, dark_mode));
+        let repo_container = document.createElement("div");
+        repo_container.classList.add("repo-container");
+        repo_container.appendChild(make_repo_avatar(repo["owner"]));
+        repo_container.appendChild(make_repo_link(repo, fullname));
+        repo_container.appendChild(make_info_box(repo, dark_mode));
         if (repo["fork"]) {
-            container.appendChild(make_fork_icon(dark_mode));
+            repo_container.appendChild(make_fork_icon(dark_mode));
         }
-        container.appendChild(make_issue_icon(repo["html_url"] + "/issues", dark_mode));
-        container.appendChild(make_pr_icon(repo["html_url"] + "/pulls", dark_mode));
-        document.body.appendChild(container);
+        repo_container.appendChild(make_issue_icon(repo["html_url"] + "/issues", dark_mode));
+        repo_container.appendChild(make_pr_icon(repo["html_url"] + "/pulls", dark_mode));
+        container.appendChild(repo_container);
     }
 }
 

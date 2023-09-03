@@ -20,6 +20,6 @@
     border-color: white;
 }
 
-.container:hover .info-box {
+.repo-container:hover .info-box {
     visibility: visible;
 }
