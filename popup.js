@@ -1,30 +1,11 @@
-import { render_repos } from "./repos.js";
+import { RepoManager } from "./repos.js";
 
-var repos = [];
-var username = "";
-
-function repo_filter() {
-    let only_mine = document.getElementById("only_mine").checked;
-    let language = document.getElementById("language").options[document.getElementById("language").selectedIndex].value;
-    let search = document.getElementById("search").value;
-    let filtered_repos = repos;
-    if (only_mine) {
-        filtered_repos = repos.filter(repo => repo["owner"]["login"] == username);
-    }
-    if (language) {
-        filtered_repos = repos.filter(repo => repo["language"] == language)
-    }
-    console.log(filtered_repos[0])
-    if (search) {
-        filtered_repos = repos.filter(repo => repo["name"].includes(search) || (repo["description"] && repo["description"].includes(search)));
-    }
-    return filtered_repos;
-}
+var repo_renderer = new RepoManager([], "", true);
 
 function clear_filter() {
     document.getElementById("only_mine").checked = false;
     document.getElementById("language").selectedIndex = 0;
-    render_repos(repo_filter(), dark_mode);
+    repo_renderer.renderRepos();
 }
 
 function set_dark_mode(dark_mode) {
@@ -43,16 +24,11 @@ function init() {
     clear_btn.addEventListener("click", function () { clear_filter() })
     let dark_mode_btn = document.getElementById("dark_mode");
     dark_mode_btn.addEventListener("click", (event) => {
-        if (event.currentTarget.checked) {
-            set_dark_mode(true);
-        }
-        else {
-            set_dark_mode(false);
-        }
+        set_dark_mode(event.target.checked);
     })
     let filter_form = document.getElementById("filter-form");
     filter_form.addEventListener("submit", function (event) { event.preventDefault(); })
-    filter_form.addEventListener("change", function () { render_repos(repo_filter(), dark_mode); })
+    filter_form.addEventListener("change", function () { repo_renderer.renderRepos(); })
 
     chrome.storage.sync.get(["TOKEN", "dark_mode"], function (setting) {
         // load setting
@@ -75,7 +51,7 @@ function init() {
             request_user.onreadystatechange = function () {
                 if (request_user.readyState == XMLHttpRequest.DONE && request_user.status == 200) {
                     let user = JSON.parse(request_user.responseText);
-                    username = user["name"];
+                    repo_renderer.username = user["name"];
                 }
             }
             request_user.setRequestHeader("Authorization", "token " + TOKEN);
@@ -85,9 +61,10 @@ function init() {
             request_repo.open("GET", "https://api.github.com/user/repos?per_page=1000&visibility=all&sort=updated");
             request_repo.onreadystatechange = function () {
                 if (request_repo.readyState == XMLHttpRequest.DONE && request_repo.status == 200) {
-                    repos = JSON.parse(request_repo.responseText);
+                    let repos = JSON.parse(request_repo.responseText);
                     msg.innerText = "";
-                    render_repos(repo_filter(), dark_mode);
+                    repo_renderer.repos = repos;
+                    repo_renderer.renderRepos();
                 }
                 else {
                     msg.innerText = "Error";
