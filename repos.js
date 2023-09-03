@@ -7,17 +7,28 @@ class RepoManager {
 
     repoFilter() {
         let only_mine = document.getElementById("only_mine").checked;
-        let language = document.getElementById("language").options[document.getElementById("language").selectedIndex].value;
-        let search = document.getElementById("search").value;
+        let search = document.getElementById("search").value.toLowerCase();
         let filtered_repos = this.repos;
         if (only_mine) {
             filtered_repos = filtered_repos.filter(repo => repo["owner"]["login"] == this.username);
         }
-        if (language) {
-            filtered_repos = filtered_repos.filter(repo => repo["language"] == language)
-        }
         if (search) {
-            filtered_repos = filtered_repos.filter(repo => repo["name"].includes(search) || (repo["description"] && repo["description"].includes(search)));
+            let search_arr = search.split(" ");
+            let new_filtered_repos = [];
+            for (let i = 0; i < search_arr.length; i++) {
+                for (let j = 0; j < filtered_repos.length; j++) {
+                    let repo = filtered_repos[j];
+                    let name = repo["name"].toLowerCase();
+                    let description = repo["description"] ? repo["description"].toLowerCase() : "";
+                    let owner = repo["owner"]["login"].toLowerCase();
+                    let language = repo["language"] ? repo["language"].toLowerCase() : "";
+                    let topics = repo["topics"] ? repo["topics"].join(" ").toLowerCase() : "";
+                    if (name.includes(search_arr[i]) || description.includes(search_arr[i]) || owner.includes(search_arr[i]) || language.includes(search_arr[i]) || topics.includes(search_arr[i])) {
+                        new_filtered_repos.push(repo);
+                    }
+                }
+            }
+            filtered_repos = new_filtered_repos;
         }
         this.render_repos = filtered_repos;
     }

@@ -34,16 +34,6 @@ a:hover {
     text-decoration: underline;
 }
 
-select {
-    margin: 2px 0;
-    padding-left: 5px;
-    height: 25px;
-    width: 200px;
-    border-radius: 5px;
-    border: 0px;
-    outline: none;
-}
-
 img {
     width: 17px;
     margin: 0px 5px -5px 5px;
@@ -59,8 +49,12 @@ img {
     color: #0075FF;
 }
 
-.fork,.pr,.issue {
+.fork, .pr, .issue {
     width: 18px;
+}
+
+.pr:hover, .issue:hover {
+    opacity: 0.8;
 }
 
 .dark_mode .fork {

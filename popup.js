@@ -4,7 +4,7 @@ var repo_renderer = new RepoManager([], "");
 
 function clear_filter() {
     document.getElementById("only_mine").checked = false;
-    document.getElementById("language").selectedIndex = 0;
+    document.getElementById("search").value = "";
     repo_renderer.renderRepos();
 }
 
